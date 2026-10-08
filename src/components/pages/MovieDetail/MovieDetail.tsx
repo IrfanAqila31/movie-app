@@ -21,7 +21,7 @@ const MovieDetail = () => {
   }
   return (
     <main className="min-h-screen bg-slate-900 text-slate-100 py-6">
-       <div className="max-w-7xl mx-auto p-4">
+      <div className="max-w-7xl mx-auto p-4">
         <img
           src={`https://image.tmdb.org/t/p/original${data.backdrop_path}`}
           alt={data.title}
@@ -37,54 +37,109 @@ const MovieDetail = () => {
             />
           </figure>
 
-          <header className="max-w-5xl">
-            <h1 className="text-3xl font-bold mt-4">{data.title}</h1>
+          <div className="max-w-5xl flex-1">
+            <header>
+              <h1 className="text-3xl font-bold">{data.title}</h1>
 
-            <p className="mt-2 text-slate-300">{data.overview}</p>
+              <div className="flex flex-wrap items-center gap-6 mt-4 text-sm text-slate-300">
+                <p className="flex items-center gap-1.5 font-medium pr-4 border-r border-slate-700">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth="1.5"
+                    stroke="currentColor"
+                    className="size-5 text-amber-400"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M11.48 3.499a.562.562 0 0 1 1.04 0l2.125 5.111a.563.563 0 0 0 .475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 0 0-.182.557l1.285 5.385a.562.562 0 0 1-.84.61l-4.725-2.885a.562.562 0 0 0-.586 0L6.982 20.54a.562.562 0 0 1-.84-.61l1.285-5.386a.562.562 0 0 0-.182-.557l-4.204-3.602a.562.562 0 0 1 .321-.988l5.518-.442a.563.563 0 0 0 .475-.345L11.48 3.5Z"
+                    />
+                  </svg>
+                  Rating:{" "}
+                  <span className="font-semibold text-amber-400">
+                    {data.vote_average.toFixed(1)}
+                  </span>
+                </p>
 
-            <ul className="flex gap-4 mt-4">
-              {data.genres.map((genre) => (
+                <p className="pr-4 border-r border-slate-700">
+                  Durasi:{" "}
+                  <span className="font-semibold text-white">
+                    {data.runtime ? `${data.runtime} Menit` : "Tidak tersedia"}
+                  </span>
+                </p>
+
+                <p className="pr-4 border-r border-slate-700">
+                  Rilis:{" "}
+                  <time
+                    dateTime={data.release_date}
+                    className="font-semibold text-white"
+                  >
+                    {data.release_date}
+                  </time>
+                </p>
+                <p className="flex items-center gap-1.5">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth="1.5"
+                    stroke="currentColor"
+                    className="size-5 text-amber-400"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M11.48 3.499a.562.562 0 0 1 1.04 0l2.125 5.111a.563.563 0 0 0 .475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 0 0-.182.557l1.285 5.385a.562.562 0 0 1-.84.61l-4.725-2.885a.562.562 0 0 0-.586 0L6.982 20.54a.562.562 0 0 1-.84-.61l1.285-5.386a.562.562 0 0 0-.182-.557l-4.204-3.602a.562.562 0 0 1 .321-.988l5.518-.442a.563.563 0 0 0 .475-.345L11.48 3.5Z"
+                    />
+                  </svg>{" "}
+                  {data.vote_average.toFixed(1)}{" "}
+                  <span className="text-slate-400 text-xs">
+                    ({data.vote_count.toLocaleString()} suara)
+                  </span>
+                </p>
+              </div>
+
+              <ul className="flex gap-2 mt-4 flex-wrap">
+                {data.genres?.map((genre) => (
+                  <li
+                    className="bg-amber-400 text-slate-900 px-3 py-1 rounded-full text-xs font-semibold"
+                    key={genre.id}
+                  >
+                    {genre.name}
+                  </li>
+                ))}
+              </ul>
+            </header>
+
+            <section className="mt-6">
+              <h2 className="text-xl font-bold text-white">Sinopsis</h2>
+              <p className="mt-2 text-slate-300 leading-relaxed text-base">
+                {data.overview ||
+                  "Belum ada ringkasan sinopsis untuk film ini."}
+              </p>
+            </section>
+          </div>
+        </div>
+
+        {data.production_companies && data.production_companies.length > 0 && (
+          <section className="mt-10 pt-6 border-t border-slate-800">
+            <h2 className="text-xl font-bold mb-4 text-white">
+              Studio Produksi
+            </h2>
+            <ul className="flex flex-wrap gap-3">
+              {data.production_companies.map((production) => (
                 <li
-                  className="bg-amber-400 text-slate-900 px-3 py-1 rounded-xl text-sm font-semibold"
-                  key={genre.id}
+                  key={production.id}
+                  className="bg-slate-800/80 border border-slate-700/60 text-slate-200 px-4 py-2 rounded-xl text-sm font-medium"
                 >
-                  {genre.name}
+                  {production.name}
                 </li>
               ))}
             </ul>
-
-            <p className="mt-4 text-slate-200 flex items-center gap-2">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth="1.5"
-                stroke="currentColor"
-                className="size-6 text-amber-400"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M11.48 3.499a.562.562 0 0 1 1.04 0l2.125 5.111a.563.563 0 0 0 .475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 0 0-.182.557l1.285 5.385a.562.562 0 0 1-.84.61l-4.725-2.885a.562.562 0 0 0-.586 0L6.982 20.54a.562.562 0 0 1-.84-.61l1.285-5.386a.562.562 0 0 0-.182-.557l-4.204-3.602a.562.562 0 0 1 .321-.988l5.518-.442a.563.563 0 0 0 .475-.345L11.48 3.5Z"
-                />
-              </svg>
-              Rating:{" "}
-              <span className="font-semibold text-amber-400">
-                {data.vote_average.toFixed(1)}
-              </span>
-            </p>
-
-            <p className="mt-1 text-slate-400">
-              Rilis:{" "}
-              <time dateTime={data.release_date}>{data.release_date}</time>
-            </p>
-          </header>
-        </div>
-        <ul>
-          {data.production_companies.map((production) => (
-            <li key={production.id}>{production.name}</li>
-          ))}
-        </ul>
+          </section>
+        )}
       </div>
     </main>
   );
