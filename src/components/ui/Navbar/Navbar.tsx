@@ -1,0 +1,20 @@
+import { Link } from "react-router-dom";
+
+const Navbar = () => {
+  return (
+    <header className="fixed top-0 left-0 w-full z-50 flex justify-center">
+      <nav className="bg-slate-950 backdrop-blur-md border border-b-slate-800 w-full px-6 py-3 md:py-4 flex items-center justify-center">
+        <div className="text-slate-300 flex gap-20">
+          <Link to="/" className="">
+            Home
+          </Link>
+          <Link to="/popular" className="">
+            Popular
+          </Link>
+        </div>
+      </nav>
+    </header>
+  );
+};
+
+export default Navbar;

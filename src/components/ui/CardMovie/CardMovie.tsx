@@ -1,18 +1,9 @@
 import { Link } from "react-router-dom";
 import type { Movie } from "../../../types/movie";
 
-type CardMovieProps = Pick<
-  Movie,
-  "id" | "title" | "poster_path" | "release_date" | "vote_average"
->;
+type CardMovieProps = Pick<Movie, "id" | "title" | "poster_path">;
 
-const CardMovie = ({
-  id,
-  title,
-  poster_path,
-  release_date,
-  vote_average,
-}: CardMovieProps) => {
+const CardMovie = ({ id, title, poster_path }: CardMovieProps) => {
   const imageUrl = poster_path
     ? `https://image.tmdb.org/t/p/w500${poster_path}`
     : "https://via.placeholder.com/500x750?text=No+Image";
@@ -20,24 +11,19 @@ const CardMovie = ({
   return (
     <Link
       to={`/movie/${id}`}
-      className="bg-slate-700 rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300"
+      className="group relative block w-full overflow-hidden rounded-xl shadow-md transition-transform duration-300 hover:scale-[1.01]"
     >
       <img
         src={imageUrl}
         alt={title}
-        className="w-full h-87 object-cover"
+        className="h-60 w-full object-cover"
         loading="lazy"
       />
-      <div className="p-4">
-        <h2 className="font-bold text-lg text-slate-100 line-clamp-1">
-          {title}
-        </h2>
-        <div className="flex justify-between items-center mt-2 text-sm text-slate-400">
-          <span>{release_date ? release_date.substring(0, 4) : ""}</span>
-          <span className="flex items-center gap-1 bg-amber-400/20 text-amber-400 px-2 py-1 rounded-full font-medium">
-            {vote_average.toFixed(1)}
-          </span>
-        </div>
+
+      <div className="absolute inset-0 bg-linear-to-t from-black via-black/30 to-transparent" />
+
+      <div className="absolute inset-x-0 bottom-0 p-4 text-center">
+        <h2 className="line-clamp-2 text-lg font-bold text-white">{title}</h2>
       </div>
     </Link>
   );

@@ -16,7 +16,12 @@ export const getMovieCredits = async (id: string) => {
   return response.data.results;
 };
 
-export const getMovieSimilar = async (id: string) => {
+export const getMovieSimilar = async (id: string): Promise<Movie[]> => {
   const response = await api.get(`/movie/${id}/similar?language=id-ID`);
+  return response.data.results;
+};
+
+export const getNowPlayingMovies = async (): Promise<Movie[]> => {
+  const response = await api.get("/movie/now_playing?language=id-ID&page=1");
   return response.data.results;
 };

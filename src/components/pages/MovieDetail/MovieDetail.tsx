@@ -1,6 +1,8 @@
 import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
-import { getMovieById } from "../../../services/movie.service";
+import { getMovieById, getMovieSimilar } from "../../../services/movie.service";
+// import CardMovie from "../../ui/CardMovie";
+import SimilarMovies from "./SimilarMovies";
 
 const MovieDetail = () => {
   const { id } = useParams();
@@ -9,19 +11,38 @@ const MovieDetail = () => {
     queryFn: () => getMovieById(id!),
     enabled: !!id,
   });
-  console.log("data film", data);
+
+  const {
+    data: similarMovies,
+    isLoading: isSimilarLoading,
+    isError: isSimilarError,
+  } = useQuery({
+    queryKey: ["movie-similar", id],
+    queryFn: () => getMovieSimilar(id!),
+    enabled: !!id,
+  });
+  // console.log("data film", data);
   if (isLoading) {
-    return <h1 className="text-center mt-10">Loading Film...</h1>;
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-slate-900 text-white">
+        <h1 className="text-center text-2xl">Loading Film...</h1>
+      </div>
+    );
   }
+
   if (isError) {
-    return <h1 className="text-center mt-10">Gagal Memuat Film</h1>;
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-slate-900 text-white">
+        <h1 className="text-center text-2xl">Gagal Memuat Film</h1>
+      </div>
+    );
   }
   if (!data) {
     return <h1 className="text-center mt-10">Film tidak ditemukan</h1>;
   }
   return (
-    <main className="min-h-screen bg-slate-900 text-slate-100 py-6">
-      <div className="max-w-7xl mx-auto p-4">
+    <main className="min-h-screen bg-slate-900 text-slate-100">
+      <div className="max-w-7xl mx-auto pt-24">
         <img
           src={`https://image.tmdb.org/t/p/original${data.backdrop_path}`}
           alt={data.title}
@@ -140,6 +161,11 @@ const MovieDetail = () => {
             </ul>
           </section>
         )}
+        <SimilarMovies
+          movies={similarMovies}
+          isLoading={isSimilarLoading}
+          isError={isSimilarError}
+        />
       </div>
     </main>
   );
