@@ -18,12 +18,28 @@ export interface Movie {
   vote_average: number;
   vote_count: number;
   overview: string;
-  genre_ids: number[]; // Dipakai di daftar film (Popular)
-  genres: Genre[]; // Dipakai di halaman Detail film
+  genre_ids: number[]; 
+  genres: Genre[];
   tagline: string;
   runtime: number;
   status: string;
   original_language: string;
   budget: number;
   production_companies: ProductionCompany[];
+}
+
+export interface Cast {
+  id: number;
+  name: string;
+  character: string;
+  profile_path: string | null;
+}
+
+export interface MovieVideo {
+  id: string;
+  key: string; 
+  name: string; 
+  site: string; 
+  type: string; 
+  official: boolean;
 }

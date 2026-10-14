@@ -29,9 +29,9 @@ const SimilarMovies = ({
   }
 
   return (
-    <section className="mt-10 border-t border-slate-700 pt-6">
+    <section className="mt-10 border-t border-slate-700 pt-6 ">
       <h2 className="text-xl font-bold mb-4 text-white">
-        Rekomendasi Film
+        Recomended Movies
       </h2>
 
       <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-4">
