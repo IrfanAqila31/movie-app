@@ -30,3 +30,10 @@ export const getMovieVideos = async (id: string): Promise<MovieVideo[]> => {
   const response = await api.get(`/movie/${id}/videos?language=en-US`);
   return response.data.results;
 };
+
+export const searchMovie = async (query: string): Promise<Movie[]> => {
+  const response = await api.get(
+    `/search/movie?query=${query}&language=en-US&page=1`,
+  );
+  return response.data.results;
+};
